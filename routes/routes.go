@@ -2,19 +2,21 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/jinzhu/gorm"
-	"github.com/marcellof23/ocbc-practice-day4/handler"
+	"gorm.io/gorm"
+
+	"github.com/marcellof23/devcamp-day4/handler"
 )
 
-func SetupRoutes(db *gorm.DB, employeeHdl handler.EmployeeHandler) *gin.Engine {
+func SetupRoutes(db *gorm.DB, productHdl handler.ProductHandler) *gin.Engine {
 	r := gin.Default()
 	r.Use(func(c *gin.Context) {
 		c.Set("db", db)
 	})
 
-	r.GET("/employees", employeeHdl.GetAll)
-	r.GET("/employees/:id", employeeHdl.GetSingle)
-	r.POST("/employees", employeeHdl.Create)
-	r.DELETE("/employees/:id", employeeHdl.Delete)
+	r.GET("/products", productHdl.GetAll)
+	r.GET("/products/:id", productHdl.GetSingle)
+	r.PUT("/products/:id", productHdl.Update)
+	r.POST("/products", productHdl.Create)
+	r.DELETE("/products/:id", productHdl.Delete)
 	return r
 }

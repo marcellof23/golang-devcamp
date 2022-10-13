@@ -5,9 +5,9 @@ import (
 	"log"
 	"os"
 
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
 	"github.com/joho/godotenv"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
 // Setup : initializing mysql database
@@ -22,7 +22,7 @@ func Init() *gorm.DB {
 	user := os.Getenv("user")
 	dbname := os.Getenv("dbname")
 	password := os.Getenv("password")
-	db, err := gorm.Open("postgres", fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s", host, port, user, dbname, password))
+	db, err := gorm.Open(postgres.Open(fmt.Sprintf("host=%s port=%s user=%s dbname=%s password=%s sslmode=disable", host, port, user, dbname, password)), &gorm.Config{})
 
 	if err != nil {
 		log.Fatal(err)
